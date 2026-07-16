@@ -9,38 +9,185 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppTheoryRouteImport } from './routes/_app.theory'
+import { Route as AppSettingsRouteImport } from './routes/_app.settings'
+import { Route as AppProjectsRouteImport } from './routes/_app.projects'
+import { Route as AppPracticeRouteImport } from './routes/_app.practice'
+import { Route as AppLibraryRouteImport } from './routes/_app.library'
+import { Route as AppInstrumentsRouteImport } from './routes/_app.instruments'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppComposerRouteImport } from './routes/_app.composer'
+import { Route as AppAssistantRouteImport } from './routes/_app.assistant'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppTheoryRoute = AppTheoryRouteImport.update({
+  id: '/theory',
+  path: '/theory',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProjectsRoute = AppProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPracticeRoute = AppPracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLibraryRoute = AppLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInstrumentsRoute = AppInstrumentsRouteImport.update({
+  id: '/instruments',
+  path: '/instruments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppComposerRoute = AppComposerRouteImport.update({
+  id: '/composer',
+  path: '/composer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssistantRoute = AppAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/assistant': typeof AppAssistantRoute
+  '/composer': typeof AppComposerRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/instruments': typeof AppInstrumentsRoute
+  '/library': typeof AppLibraryRoute
+  '/practice': typeof AppPracticeRoute
+  '/projects': typeof AppProjectsRoute
+  '/settings': typeof AppSettingsRoute
+  '/theory': typeof AppTheoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/assistant': typeof AppAssistantRoute
+  '/composer': typeof AppComposerRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/instruments': typeof AppInstrumentsRoute
+  '/library': typeof AppLibraryRoute
+  '/practice': typeof AppPracticeRoute
+  '/projects': typeof AppProjectsRoute
+  '/settings': typeof AppSettingsRoute
+  '/theory': typeof AppTheoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_app/assistant': typeof AppAssistantRoute
+  '/_app/composer': typeof AppComposerRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/instruments': typeof AppInstrumentsRoute
+  '/_app/library': typeof AppLibraryRoute
+  '/_app/practice': typeof AppPracticeRoute
+  '/_app/projects': typeof AppProjectsRoute
+  '/_app/settings': typeof AppSettingsRoute
+  '/_app/theory': typeof AppTheoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/sitemap.xml'
+    | '/assistant'
+    | '/composer'
+    | '/dashboard'
+    | '/instruments'
+    | '/library'
+    | '/practice'
+    | '/projects'
+    | '/settings'
+    | '/theory'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/sitemap.xml'
+    | '/assistant'
+    | '/composer'
+    | '/dashboard'
+    | '/instruments'
+    | '/library'
+    | '/practice'
+    | '/projects'
+    | '/settings'
+    | '/theory'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/sitemap.xml'
+    | '/_app/assistant'
+    | '/_app/composer'
+    | '/_app/dashboard'
+    | '/_app/instruments'
+    | '/_app/library'
+    | '/_app/practice'
+    | '/_app/projects'
+    | '/_app/settings'
+    | '/_app/theory'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +195,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/theory': {
+      id: '/_app/theory'
+      path: '/theory'
+      fullPath: '/theory'
+      preLoaderRoute: typeof AppTheoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/projects': {
+      id: '/_app/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof AppProjectsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/practice': {
+      id: '/_app/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof AppPracticeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/library': {
+      id: '/_app/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof AppLibraryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/instruments': {
+      id: '/_app/instruments'
+      path: '/instruments'
+      fullPath: '/instruments'
+      preLoaderRoute: typeof AppInstrumentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/composer': {
+      id: '/_app/composer'
+      path: '/composer'
+      fullPath: '/composer'
+      preLoaderRoute: typeof AppComposerRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assistant': {
+      id: '/_app/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AppAssistantRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAssistantRoute: typeof AppAssistantRoute
+  AppComposerRoute: typeof AppComposerRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppInstrumentsRoute: typeof AppInstrumentsRoute
+  AppLibraryRoute: typeof AppLibraryRoute
+  AppPracticeRoute: typeof AppPracticeRoute
+  AppProjectsRoute: typeof AppProjectsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTheoryRoute: typeof AppTheoryRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAssistantRoute: AppAssistantRoute,
+  AppComposerRoute: AppComposerRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppInstrumentsRoute: AppInstrumentsRoute,
+  AppLibraryRoute: AppLibraryRoute,
+  AppPracticeRoute: AppPracticeRoute,
+  AppProjectsRoute: AppProjectsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTheoryRoute: AppTheoryRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
