@@ -12,8 +12,8 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "MusicOS — A premium studio for music theory & practice" },
       { name: "description", content: "Learn theory, explore harmony, practice instruments, build progressions and compose — in one beautifully designed workspace." },
-      { property: "og:title", content: "MusicOS — Premium music workspace" },
-      { property: "og:description", content: "A calm, futuristic operating system for musicians. Theory, harmony, practice and composition, unified." },
+      { property: "og:title", content: "MusicOS — A premium studio for music theory & practice" },
+      { property: "og:description", content: "Learn theory, explore harmony, practice instruments, build progressions and compose — in one beautifully designed workspace." },
     ],
   }),
   component: Landing,
