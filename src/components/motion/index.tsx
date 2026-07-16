@@ -169,10 +169,11 @@ export function GlowEffect({ className, intensity = 0.6 }: { className?: string;
   );
 }
 
-type ButtonProps = HTMLMotionProps<"button"> & {
+type ButtonProps = Omit<HTMLMotionProps<"button">, "children"> & {
   variant?: "primary" | "ghost" | "glass";
   size?: "sm" | "md" | "lg";
   glow?: boolean;
+  children?: ReactNode;
 };
 
 /** AnimatedButton — hover glow, press scale, ripple */
