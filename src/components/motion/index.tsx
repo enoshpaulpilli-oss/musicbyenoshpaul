@@ -2,19 +2,22 @@
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, type HTMLMotionProps, type Variants } from "framer-motion";
 import { forwardRef, useRef, type ReactNode, type MouseEvent, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { EASE as EASE_TOKENS, DUR, STAGGER } from "./tokens";
 
-/** Shared easing — Anime.js-inspired, smooth physical curves */
-export const EASE = [0.22, 1, 0.36, 1] as const;
-export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+/** Shared easing — re-exported for backwards compatibility. Prefer importing
+ *  the full token map from "./tokens". */
+export const EASE = EASE_TOKENS.out;
+export const EASE_OUT = EASE_TOKENS.outSoft;
+export { EASE_TOKENS, DUR, STAGGER };
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 18, filter: "blur(8px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: EASE } },
+  hidden: { opacity: 0, y: 22, filter: "blur(10px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: DUR.slow, ease: EASE_TOKENS.outSoft } },
 };
 
 export const stagger: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+  show: { transition: { staggerChildren: STAGGER.base, delayChildren: 0.05 } },
 };
 
 /** MotionContainer — reveals children with staggered fadeUp on mount / in-view */
@@ -108,8 +111,10 @@ export function AnimatedCard({
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(50);
   const my = useMotionValue(50);
-  const rx = useSpring(useTransform(my, [0, 100], [4, -4]), { stiffness: 150, damping: 18 });
-  const ry = useSpring(useTransform(mx, [0, 100], [-4, 4]), { stiffness: 150, damping: 18 });
+  // Very gentle tilt — depth cue, not a toy.
+  const rx = useSpring(useTransform(my, [0, 100], [2.5, -2.5]), { stiffness: 140, damping: 22 });
+  const ry = useSpring(useTransform(mx, [0, 100], [-2.5, 2.5]), { stiffness: 140, damping: 22 });
+  const [hover, setHover] = useState(false);
 
   const handle = (e: MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
@@ -118,37 +123,38 @@ export function AnimatedCard({
     mx.set(((e.clientX - r.left) / r.width) * 100);
     my.set(((e.clientY - r.top) / r.height) * 100);
   };
-  const leave = () => { mx.set(50); my.set(50); };
+  const leave = () => { mx.set(50); my.set(50); setHover(false); };
 
   return (
     <motion.div
       ref={ref}
       onMouseMove={handle}
+      onMouseEnter={() => setHover(true)}
       onMouseLeave={leave}
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ delay, duration: 0.7, ease: EASE }}
-      whileHover={{ y: -4, transition: { duration: 0.35, ease: EASE } }}
-      style={tilt ? { rotateX: rx, rotateY: ry, transformPerspective: 1000 } : undefined}
+      transition={{ delay, duration: DUR.slow, ease: EASE_TOKENS.outSoft }}
+      whileHover={{ y: -3, transition: { duration: DUR.fast, ease: EASE_TOKENS.out } }}
+      style={tilt ? { rotateX: rx, rotateY: ry, transformPerspective: 1200 } : undefined}
       className={cn(
         "group relative rounded-2xl glass border border-white/10 p-5 will-change-transform",
-        "transition-shadow duration-500 hover:shadow-[0_30px_80px_-30px_var(--color-glow)]",
+        "transition-shadow duration-700 hover:shadow-[0_40px_90px_-40px_color-mix(in_oklab,var(--color-primary)_45%,transparent)]",
         className,
       )}
     >
-      {glow && (
+      {glow && hover && (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: EASE_TOKENS.out }}
+          className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{
-            background: `radial-gradient(400px circle at ${mx.get()}% ${my.get()}%, color-mix(in oklab, var(--color-primary) 25%, transparent), transparent 60%)`,
+            background: `radial-gradient(340px circle at ${mx.get()}% ${my.get()}%, color-mix(in oklab, var(--color-primary) 14%, transparent), transparent 65%)`,
           }}
         />
-      )}
-      {glow && (
-        <div aria-hidden className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ring-1 ring-inset ring-primary/30" />
       )}
       <div className="relative">{children}</div>
     </motion.div>
