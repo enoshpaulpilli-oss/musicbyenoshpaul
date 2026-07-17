@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from "fram
 import { Music2, ArrowRight, Sparkles, Waves, Grid3x3, Radio, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { AnimatedButton, AnimatedCard, MotionContainer, MotionItem, EASE, FloatingPanel } from "@/components/motion";
+import { SplitText } from "@/components/motion/split-text";
 import { InteractiveBackground } from "@/components/motion/background";
 import { CustomCursor } from "@/components/motion/cursor";
 
@@ -23,7 +24,7 @@ function Landing() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <CustomCursor />
-      <InteractiveBackground notes />
+      <InteractiveBackground />
 
       {/* Nav */}
       <motion.header
@@ -155,35 +156,31 @@ function Hero() {
     <section ref={ref} className="relative pt-40 pb-24 px-6">
       <motion.div style={{ y: y1, opacity }} className="relative mx-auto max-w-5xl text-center">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs text-muted-foreground mb-6 border border-white/10"
+          transition={{ duration: 0.7, ease: EASE }}
+          className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs text-muted-foreground mb-8 border border-white/10"
         >
-          <motion.span
-            animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="h-1.5 w-1.5 rounded-full bg-primary"
-          />
+          <span className="h-1 w-1 rounded-full bg-primary/80" />
           Version 1 · Now in open beta
         </motion.div>
 
         <AnimatedHeadline />
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.7, ease: EASE }}
-          className="mt-6 mx-auto max-w-2xl text-lg text-muted-foreground"
+          initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.9, duration: 0.9, ease: EASE }}
+          className="mt-8 mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed"
         >
-          Learn theory, explore harmony visually, practice, compose, and analyze songs — inside a calm, interactive workspace built with the fluidity of a native app.
+          Learn theory, explore harmony visually, practice, compose and analyze songs — inside a calm, interactive workspace built with the fluidity of a native app.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.7, ease: EASE }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          transition={{ delay: 1.1, duration: 0.8, ease: EASE }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
           <Link to="/dashboard">
             <AnimatedButton size="lg">
@@ -241,24 +238,14 @@ function Hero() {
 }
 
 function AnimatedHeadline() {
-  const lines = [
-    { text: "The operating system", gradient: false },
-    { text: "for musicians.", gradient: true },
-  ];
   return (
-    <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.02]">
-      {lines.map((line, li) => (
-        <span key={li} className="block overflow-hidden">
-          <motion.span
-            initial={{ y: "110%" }}
-            animate={{ y: "0%" }}
-            transition={{ delay: 0.15 + li * 0.15, duration: 0.9, ease: EASE }}
-            className="inline-block"
-          >
-            {line.gradient ? <span className="text-gradient">{line.text}</span> : line.text}
-          </motion.span>
-        </span>
-      ))}
+    <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold tracking-[-0.035em] leading-[1.02]">
+      <span className="block">
+        <SplitText text="The operating system" split="words" inView={false} />
+      </span>
+      <span className="block">
+        <SplitText text="for musicians." split="words" inView={false} delay={0.25} className="text-gradient" />
+      </span>
     </h1>
   );
 }
