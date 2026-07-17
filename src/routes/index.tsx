@@ -79,15 +79,11 @@ function Landing() {
           <div className="grid md:grid-cols-3 gap-4">
             {FEATURES.map((f, i) => (
               <AnimatedCard key={f.title} delay={i * 0.08}>
-                <motion.div
-                  whileHover={{ rotate: -8, scale: 1.1 }}
-                  transition={{ duration: 0.4, ease: EASE }}
-                  className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-primary/25 to-accent/10 text-primary shadow-[0_0_24px_var(--color-glow)]"
-                >
-                  <f.icon className="h-5 w-5" />
-                </motion.div>
-                <h3 className="mt-4 font-display font-semibold text-lg tracking-tight">{f.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-white/[0.04] text-primary/90 border border-white/10">
+                  <f.icon className="h-4.5 w-4.5" />
+                </div>
+                <h3 className="mt-5 font-display font-semibold text-lg tracking-tight">{f.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </AnimatedCard>
             ))}
           </div>
@@ -98,13 +94,9 @@ function Landing() {
       <section id="composer" className="relative py-24 px-6">
         <FloatingPanel className="mx-auto max-w-4xl">
           <div className="text-center py-8">
-            <motion.div
-              animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.08, 1] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent shadow-[0_0_40px_var(--color-glow)]"
-            >
-              <Sparkles className="h-6 w-6 text-primary-foreground" />
-            </motion.div>
+            <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.04] border border-white/10 text-primary/90">
+              <Sparkles className="h-5 w-5" />
+            </div>
             <h2 className="mt-6 font-display text-4xl md:text-5xl font-bold tracking-tight">Compose without friction.</h2>
             <p className="mt-3 mx-auto max-w-xl text-muted-foreground">
               Sketch progressions, analyze songs, and let the AI assistant suggest substitutions and modal borrowings — all inside one workspace.
