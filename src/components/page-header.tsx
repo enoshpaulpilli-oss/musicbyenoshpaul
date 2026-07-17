@@ -1,7 +1,9 @@
 "use client";
 import type { ReactNode } from "react";
+import { SplitText } from "@/components/motion/split-text";
+import { Reveal } from "@/components/motion/split-text";
 import { motion } from "framer-motion";
-import { EASE } from "@/components/motion";
+import { EASE, DUR } from "@/components/motion/tokens";
 
 export function PageHeader({
   eyebrow,
@@ -15,44 +17,32 @@ export function PageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <header className="mb-10 flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0">
         {eyebrow && (
           <motion.p
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="text-xs uppercase tracking-[0.24em] text-muted-foreground mb-2"
+            transition={{ duration: DUR.base, ease: EASE.out }}
+            className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground mb-3"
           >
             {eyebrow}
           </motion.p>
         )}
-        <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] overflow-hidden">
-          <motion.span
-            initial={{ y: "110%" }}
-            animate={{ y: "0%" }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.05 }}
-            className="inline-block"
-          >
-            {title}
-          </motion.span>
+        <h1 className="font-display text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.02]">
+          <SplitText text={title} split="words" inView={false} />
         </h1>
         {description && (
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
-            className="mt-2 text-sm text-muted-foreground max-w-2xl"
-          >
-            {description}
-          </motion.p>
+          <p className="mt-4 text-sm text-muted-foreground max-w-2xl leading-relaxed">
+            <Reveal delay={0.35}>{description}</Reveal>
+          </p>
         )}
       </div>
       {actions && (
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.25 }}
+          transition={{ duration: DUR.base, ease: EASE.out, delay: 0.35 }}
           className="flex items-center gap-2"
         >
           {actions}
@@ -61,4 +51,3 @@ export function PageHeader({
     </header>
   );
 }
-

@@ -16,7 +16,7 @@ function AppLayout() {
     <div className="relative min-h-screen">
       <SmoothScroll />
       <CustomCursor />
-      <InteractiveBackground notes />
+      <InteractiveBackground />
       <AppSidebar />
       <MobileNav />
       <main className="md:pl-[17.5rem] md:pr-3 pt-3 pb-24 md:pb-6 px-3">

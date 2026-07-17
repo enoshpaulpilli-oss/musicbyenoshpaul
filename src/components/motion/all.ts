@@ -3,7 +3,7 @@ export * from "./magnetic-button";
 export * from "./parallax";
 export * from "./wrappers";
 export * from "./music-motion";
-export * from "./tokens";
+export * from "./split-text";
 export * from "./split-text";
 export { ImageReveal } from "./image-reveal";
 export { InteractiveBackground } from "./background";
